@@ -1,0 +1,1 @@
+from wwwauto.test1 import mainTest

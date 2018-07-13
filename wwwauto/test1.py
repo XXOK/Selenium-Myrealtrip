@@ -45,7 +45,7 @@ class mainTest(unittest.TestCase):
 
         self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "reserve-btn"))).click()
 
-        time.sleep(5)
+        time.sleep(3)
 
 
     def tearDown(self):

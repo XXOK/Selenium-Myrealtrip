@@ -1,1 +1,1 @@
-from wwwauto.test1 import mainTest
+from wwwauto.simulate import simulateTest

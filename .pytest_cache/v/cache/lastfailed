@@ -1,1 +1,3 @@
-{}
+{
+  "wwwauto/test_suite.py::SearchTest::runTest": true
+}

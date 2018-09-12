@@ -4,14 +4,28 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import unittest
 import os
+import json
 import time
 
 PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.config')
+CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'account.json')
 
-class simulateTest(unittest.TestCase):
+
+class PaymentTest(unittest.TestCase):
+
+    def __init__(self, x):
+        super().__init__()
+        self.x = x
+
+    def moveTab(self, x):
+        window_before = self.driver.window_handles[x]
+        self.driver.switch_to_window(window_before)
+        return time.sleep(2)
 
     def setUp(self):
         self.chromeDriver = PATH('../drivers/chromedriver')
@@ -19,17 +33,19 @@ class simulateTest(unittest.TestCase):
         self.wait = WebDriverWait(self.driver, 5)
 
     def runTest(self):
-        mainUrl = "https://www.myrealtrip.com/"
-        itemUrl = "https://www.myrealtrip.com/offers/22565"
 
-        name = ""
-        phone = ""
-        email = ""
-        password = ""
+        config_secret = json.loads(open(CONFIG_SETTINGS_COMMON_FILE).read())
+        name = config_secret['ACCOUNT']['NAME']
+        phone = config_secret['ACCOUNT']['PHONE']
+        email = config_secret['ACCOUNT']['EMAIL']
+        password = config_secret['ACCOUNT']['PASSWORD']
+
+        main_url = config_secret['ACCOUNT']['URL']
+        item_url = main_url + "offers/33751"
 
         # 1. 메인 화면 접속
 
-        self.driver.get(mainUrl)
+        self.driver.get(main_url)
 
         self.driver.maximize_window()
 
@@ -52,7 +68,7 @@ class simulateTest(unittest.TestCase):
 
         # 3. 오사카 라피트 왕복권 구매
 
-        self.driver.get(itemUrl)
+        self.driver.get(item_url)
 
         calendarBtn = self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "offer-title")))
 

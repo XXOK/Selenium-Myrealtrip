@@ -54,23 +54,23 @@ class CitiesDetailTest(unittest.TestCase):
 
         #TODO 2. 계정 로그인
 
-        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "gtm-gnb-signin"))).click()
+        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-signin'))).click()
 
-        self.wait.until(EC.visibility_of_element_located((By.NAME, "user[email]"))).send_keys(email)
+        self.wait.until(EC.visibility_of_element_located((By.NAME, 'user[email]'))).send_keys(email)
 
-        self.wait.until(EC.visibility_of_element_located((By.NAME, "user[password]"))).send_keys(password)
+        self.wait.until(EC.visibility_of_element_located((By.NAME, 'user[password]'))).send_keys(password)
 
-        self.wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "btn-wrap")))[2].click()
+        self.wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'btn-wrap')))[2].click()
 
-        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "profile-photo "))).click()
+        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'profile-photo '))).click()
 
         userName = self.wait.until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".gnb-popup-menu__item--profile > .text"))).text
+            EC.visibility_of_element_located((By.CSS_SELECTOR, '.gnb-popup-menu__item--profile > .text'))).text
 
         if not userName == name:
-            raise Exception("로그인 계정 정보가 올바르지 않습니다.")
+            raise Exception('로그인 계정 정보가 올바르지 않습니다.')
 
-        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "profile-photo "))).click()
+        self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'profile-photo '))).click()
 
         #TODO 3. 인기 여행지 선택
 
@@ -123,9 +123,6 @@ class CitiesDetailTest(unittest.TestCase):
 
             wish.click()
             # 첫번째 추천 상품 위시리스트 추가
-
-
-        time.sleep(3)
 
     def tearDown(self):
         self.driver.quit()

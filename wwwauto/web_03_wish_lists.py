@@ -82,7 +82,6 @@ class WishListsTest(unittest.TestCase):
 
         wish_lists_card = len(self.wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'wishlists-card'))))
         # 위시 리스트 엘리먼트 개수 (1개라는 가정)
-        print(wish_lists_card)
 
         like_count = int(self.wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'like-count'))).text)
         # 위시 리스트 엘리먼트 상품 개수 (1개라는 가정)
@@ -93,15 +92,17 @@ class WishListsTest(unittest.TestCase):
         sub_title_first = sub_title.split('총')
 
         sub_title_second = sub_title_first[0].split('개')
+        foo_wish_lists_card = int(sub_title_second[0])
         # 서브 타이틀 도시 개수
 
-        sub_title_third = sub_title_second[1].split('개')
+        sub_title_third = sub_title_first[1].split('개')
+        foo_like_count = int(sub_title_third[0])
         # 서브 타이틀 상품 개수
 
         if not wish_lists_card == sub_title_second:
             if not like_count == sub_title_third:
-                raise Exception('카운팅되는 상품 개수가 실제 위시 리스트 상품 개수와 상이합니다.', like_count, sub_title_third)
-            raise Exception('카운팅되는 도시 개수가 실제 위시 리스트 도시 개수와 상이합니다.', wish_lists_card, sub_title_second)
+                raise Exception('카운팅되는 상품 개수가 실제 위시 리스트 상품 개수와 상이합니다.', 'foo_like_count:', foo_like_count , 'like_count:', like_count)
+            raise Exception('카운팅되는 도시 개수가 실제 위시 리스트 도시 개수와 상이합니다.', wish_lists_card, foo_wish_lists_card)
 
     def tearDown(self):
         self.driver.quit()

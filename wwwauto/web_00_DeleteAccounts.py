@@ -30,6 +30,10 @@ class Test(unittest.TestCase):
         return time.sleep(2)
 
     def setUp(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        options.add_argument('window-size=1600x1080')
+        options.add_argument("disable-gpu")
         self.chromeDriver = PATH('../drivers/chromedriver')
         self.driver = webdriver.Chrome(executable_path=self.chromeDriver)
         self.wait = WebDriverWait(self.driver, 5)
@@ -60,7 +64,7 @@ class Test(unittest.TestCase):
 
         self.driver.get(main_url)
 
-        self.driver.set_window_size(1600,1000)
+        self.driver.set_window_size(1600,1080)
 
         # TODO - 이메일 계정 로그인
 
@@ -81,7 +85,7 @@ class Test(unittest.TestCase):
         # 프로필 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
 
-        # 프로필 관리 버튼 클
+        # 프로필 관리 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
 
         # 계정 삭제하기 변수 생성

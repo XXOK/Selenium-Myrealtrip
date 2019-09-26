@@ -164,8 +164,12 @@ class Test(unittest.TestCase):
         # 아이디 입력
         self.driver.execute_script("document.getElementsByName('id')[0].value=\'" + naver_email + "\'")
 
+        time.sleep(2)
+
         # 비밀번호 입력
         self.driver.execute_script("document.getElementsByName('pw')[0].value=\'" + naver_password + "\'")
+
+        time.sleep(2)
 
         # 로그인 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "btn_global"))).click()

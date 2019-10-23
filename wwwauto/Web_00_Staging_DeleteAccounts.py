@@ -15,7 +15,7 @@ PATH = lambda p: os.path.abspath(
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.config')
-CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'account.json')
+CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'staging_account.json')
 
 
 class Test(unittest.TestCase):
@@ -36,6 +36,7 @@ class Test(unittest.TestCase):
         options.add_argument("disable-gpu")
         self.chromeDriver = PATH('../drivers/chromedriver')
         self.driver = webdriver.Chrome(executable_path=self.chromeDriver)
+        # self.driver = webdriver.Chrome(executable_path=self.chromeDriver, chrome_options=options)
         self.wait = WebDriverWait(self.driver, 5)
 
     def runTest(self):
@@ -57,7 +58,7 @@ class Test(unittest.TestCase):
         login_email = config_secret['ACCOUNT']['LOGIN_EMAIL']
         login_password = config_secret['ACCOUNT']['LOGIN_PASSWORD']
 
-        main_url = config_secret['ACCOUNT']['URL']
+        main_url = config_secret['ACCOUNT']['STAGING_URL']
         item_url = main_url + "offers/33751"
 
         # TODO - 마이리얼트립 메인화면
@@ -174,32 +175,64 @@ class Test(unittest.TestCase):
         # 로그인 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "btn_global"))).click()
 
-        # TODO - 계정 삭제
+        try:
+            # TODO - 계정 삭제
 
-        # 프로필 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
+            # 프로필 버튼 클릭
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
 
-        # 프로필 관리 버튼 클
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
+            # 프로필 관리 버튼 클
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
 
-        # 계정 삭제하기 변수 생성
-        target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'text-sm')))
+            # 계정 삭제하기 변수 생성
+            target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'text-sm')))
 
-        # 계정 삭제하기 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+            # 계정 삭제하기 엘리먼트 위치로 스크롤
+            self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        time.sleep(1)
+            time.sleep(1)
 
-        # 계정 삭제하기 버튼 클릭
-        target.click()
+            # 계정 삭제하기 버튼 클릭
+            target.click()
 
-        time.sleep(1)
+            time.sleep(1)
 
-        # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
-        self.driver.find_element_by_id('reason_0').click()
+            # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
+            self.driver.find_element_by_id('reason_0').click()
 
-        # 팝업의 계정 삭제하기 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
+            # 팝업의 계정 삭제하기 버튼 클릭
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
+
+        except:
+            # TODO - 계정 삭제
+
+            # 동의하기 버튼 클릭
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn_unit_on'))).click()
+
+            # 프로필 버튼 클릭
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
+
+            # 프로필 관리 버튼 클
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
+
+            # 계정 삭제하기 변수 생성
+            target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'text-sm')))
+
+            # 계정 삭제하기 엘리먼트 위치로 스크롤
+            self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+
+            time.sleep(1)
+
+            # 계정 삭제하기 버튼 클릭
+            target.click()
+
+            time.sleep(1)
+
+            # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
+            self.driver.find_element_by_id('reason_0').click()
+
+            # 팝업의 계정 삭제하기 버튼 클릭
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
 
     def tearDown(self):
         self.driver.quit()

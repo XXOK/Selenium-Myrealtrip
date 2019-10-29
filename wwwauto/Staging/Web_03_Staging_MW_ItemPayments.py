@@ -19,7 +19,7 @@ PATH = lambda p: os.path.abspath(
 
 CONFIG_SETTINGS_COMMON_FILE = PATH('/Users/yeonshin/Selenium-Myrealtrip/.config/staging_account.json')
 
-class Test(unittest.TestCase):
+class MWItemPayments(unittest.TestCase):
 
     def __init__(self, x):
         super().__init__()
@@ -38,7 +38,7 @@ class Test(unittest.TestCase):
         # options.add_argument("disable-gpu")
         options.add_experimental_option("mobileEmulation", mobile_emulation)
         self.chromeDriver = PATH('/Users/yeonshin/Selenium-Myrealtrip/drivers/chromedriver')
-        self.driver = webdriver.Chrome(executable_path=self.chromeDriver, chrome_options=options)
+        self.driver = webdriver.Chrome(executable_path=self.chromeDriver, options=options)
         self.wait = WebDriverWait(self.driver, 10)
 
     def runTest(self):
@@ -66,12 +66,13 @@ class Test(unittest.TestCase):
         self.driver.set_window_size(1600,1080)
         self.driver.get(item_url)
 
-        pdb.set_trace()
-
         # TODO - 이메일 계정 로그인
 
+        # 드로워 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'DrawerButton'))).click()
+
         # 로그인 버튼 클릭
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "GlobalNavItems__item")))[1].click()
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-signin'))).click()
 
         # 이메일 계정 입력
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[email]'))).send_keys(login_email)
@@ -84,36 +85,31 @@ class Test(unittest.TestCase):
 
         # TODO - 금액 조회하기
 
-        # 상품 이미지 영역 변수 할당
-        target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'offer-container__photo--cover')))[1]
-
-        # 상품 이미지 영역 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+        # 구매하기 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Button-module__medium--1tPet'))).click()
 
         # 날짜 선택 영역 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'offer-container__price__datepicker'))).click()
-
-        # 다음 달 버튼 클릭
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Calendar_Nav_Button')))[1].click()
-
-        sleep(2)
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'offer-mobile-price__datepicker'))).click()
 
         # 한달 뒤 날짜 클릭
-        self.driver.find_elements_by_class_name('CalendarDay__default_2')[27].click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'CalendarDay__default_2')))[27].click()
 
-        sleep(2)
+        # 적용하기 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'DialogFooter__buttons'))).click()
+
+        sleep(3)
 
         # 옵션 선택 영역 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'offer-container__option'))).click()
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'offer-mobile-pricen'))).click()
 
         # 옵션 + 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'option-clicked'))).click()
 
-        # 금액 조회화기 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-offer-check-price'))).click()
+        # 금액 조회하기 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.XPATH, "//button[@class='app-button app-button__type--secondary app-button__size--m']"))).click()
 
         # 구매하기 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'offer-container__price__total-result--link'))).click()
+        wait.until(EC.visibility_of_element_located((By.XPATH, "//button[@class='app-button app-button__type--primary app-button__size--m']"))).click()
 
         # TODO - 주문서 페이지 주문자 정보 입력
 
@@ -138,11 +134,10 @@ class Test(unittest.TestCase):
 
         sleep(1)
 
-        # 상품 가격 변수 할당
-        item_price = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'price-container'))).text
+        # 결제정보 무통장 입금 버튼 선택
+        self.driver.find_element_by_id("type-vbank").click()
 
-        # 포인트 입력 영역에 item_price 입력
-        wait.until(EC.visibility_of_element_located((By.NAME, 'promotion[point]'))).send_keys(item_price)
+        sleep(1)
 
         # 여행자 약관 버튼 클릭
         self.driver.find_element_by_id("checkbox_terms_traveler").click()
@@ -152,65 +147,35 @@ class Test(unittest.TestCase):
         # 결제하기 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn--type-primary'))).click()
 
+        # TODO - 이니시스 무통장 결제하기
+
+        # 전체동의 클릭
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'all_p'))).click()
+
+        # 입금은행 option 값 Select 인자로 할당 후 변수 할당
+        select = Select(wait.until(EC.visibility_of_element_located((By.NAME, 'vactBankCode'))))
+
+        select.select_by_value('20')
+
+        # 다음 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn_right'))).click()
+
         # 예약 완료 시 상품 추천 팝업 닫기 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Dialog-module__close--3QJG1'))).click()
-
-        # '이 상품을 본 여행자가 함께 본 상품' 영역 변수 할당
-        target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'other-title')))
-
-        # '이 상품을 본 여행자가 함께 본 상품' 영역 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
         # 예약내역 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-blue'))).click()
 
         # TODO - 예약 건 취소하기
 
-        # 취소하기 버튼 변수 할당
-        target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'reservation-cancel-btn')))
-
-        # 취소하기 영역 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
-
         # 취소하기 버튼 클릭
-        target.click()
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'reservation-cancel-btn'))).click()
 
         # 취소하기 팝업의 예약 취소하기 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Button-module__large--SJ0aY'))).click()
 
-        # 예약이 취소되었습니다. 얼럿 확인
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'status-cancel')))
-
-        # # TODO - 무통장 결제 (현재 falsh 실행 불가능으로 주석 처리)
-        #
-        # # 결제정보 무통장 입금 버튼 선택
-        # self.driver.find_element_by_id("type-vbank").click()
-        #
-        # sleep(1)
-        #
-        # # 전체동의 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'all_p'))).click()
-        #
-        # # 입금은행 option 값 Select 인자로 할당 후 변수 할당
-        # select = Select(wait.until(EC.visibility_of_element_located((By.NAME, 'vactBankCode'))))
-        #
-        # # 입금은행 우리은행 선택
-        # select.select_by_value('20')
-        #
-        # # 다음 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn_right'))).click()
-        #
-        # # 예약 완료 시 상품 추천 팝업 닫기 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Dialog-module__close--3QJG1'))).click()
-        #
-        # # '이 상품을 본 여행자가 함께 본 상품' 영역 변수 할당
-        # target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'other-title')))
-        #
-        # # '이 상품을 본 여행자가 함께 본 상품' 영역 엘리먼트 위치로 스크롤
-        # self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
-        #
-        # # 예약내역 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-blue'))).click()
+        # 예약 페이지로 리다이렉팅 확인
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'sidebar-heading')))
 
     def tearDown(self):
         self.driver.quit()

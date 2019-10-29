@@ -19,7 +19,7 @@ PATH = lambda p: os.path.abspath(
 
 CONFIG_SETTINGS_COMMON_FILE = PATH('/Users/yeonshin/Selenium-Myrealtrip/.config/staging_account.json')
 
-class Test(unittest.TestCase):
+class ItemPayments(unittest.TestCase):
 
     def __init__(self, x):
         super().__init__()
@@ -95,7 +95,8 @@ class Test(unittest.TestCase):
         sleep(2)
 
         # 한달 뒤 날짜 클릭
-        self.driver.find_elements_by_class_name('CalendarDay__default_2')[27].click()
+        # self.driver.find_elements_by_class_name('CalendarDay__default_2')[27].click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'CalendarDay__default_2')))[27].click()
 
         sleep(2)
 
@@ -174,7 +175,7 @@ class Test(unittest.TestCase):
         # 취소하기 팝업의 예약 취소하기 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Button-module__large--SJ0aY'))).click()
 
-        # 예약이 취소되었습니다. 얼럿 확인
+        # 예약 취소 문구 확인
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'status-cancel')))
 
         # # TODO - 무통장 결제 (현재 falsh 실행 불가능으로 주석 처리)

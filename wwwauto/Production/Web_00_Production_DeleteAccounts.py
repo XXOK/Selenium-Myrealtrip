@@ -16,7 +16,7 @@ PATH = lambda p: os.path.abspath(
 
 CONFIG_SETTINGS_COMMON_FILE = PATH('/Users/yeonshin/Selenium-Myrealtrip/.config/production_account.json')
 
-class Test(unittest.TestCase):
+class DeleteAccounts(unittest.TestCase):
 
     def __init__(self, x):
         super().__init__()
@@ -34,7 +34,7 @@ class Test(unittest.TestCase):
         options.add_argument("disable-gpu")
         self.chromeDriver = PATH('/Users/yeonshin/Selenium-Myrealtrip/drivers/chromedriver')
         self.driver = webdriver.Chrome(executable_path=self.chromeDriver)
-        # self.driver = webdriver.Chrome(executable_path=self.chromeDriver, chrome_options=options)
+        # self.driver = webdriver.Chrome(executable_path=self.chromeDriver, options=options)
         self.wait = WebDriverWait(self.driver, 5)
 
     def runTest(self):

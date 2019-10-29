@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
+from time import sleep
 import unittest
 import os
 import json
@@ -27,7 +28,7 @@ class Test(unittest.TestCase):
     def moveTab(self, x):
         window_before = self.driver.window_handles[x]
         self.driver.switch_to_window(window_before)
-        return time.sleep(2)
+        return sleep(2)
 
     def setUp(self):
         options = webdriver.ChromeOptions()
@@ -81,7 +82,7 @@ class Test(unittest.TestCase):
         # 이메일로 로그인 버튼 클릭
         wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "btn-wrap")))[2].click()
 
-        # TODO - 계정 삭제
+        # TODO - 이메일 계정 삭제
 
         # 프로필 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
@@ -95,12 +96,12 @@ class Test(unittest.TestCase):
         # 계정 삭제하기 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        time.sleep(1)
+        sleep(1)
 
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        time.sleep(1)
+        sleep(1)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -125,7 +126,7 @@ class Test(unittest.TestCase):
         # 로그인 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.NAME, "login"))).click()
 
-        # TODO - 계정 삭제
+        # TODO - 페이스북 계정 삭제
 
         # 프로필 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
@@ -139,12 +140,12 @@ class Test(unittest.TestCase):
         # 계정 삭제하기 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        time.sleep(1)
+        sleep(1)
 
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        time.sleep(1)
+        sleep(1)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -160,23 +161,23 @@ class Test(unittest.TestCase):
         # 네이버로 로그인 버튼 클릭
         wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, "btn-sns")))[1].click()
 
-        time.sleep(3)
+        sleep(2)
 
         # 아이디 입력
         self.driver.execute_script("document.getElementsByName('id')[0].value=\'" + naver_email + "\'")
 
-        time.sleep(2)
+        sleep(1)
 
         # 비밀번호 입력
         self.driver.execute_script("document.getElementsByName('pw')[0].value=\'" + naver_password + "\'")
 
-        time.sleep(2)
+        sleep(1)
 
         # 로그인 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, "btn_global"))).click()
 
         try:
-            # TODO - 계정 삭제
+            # TODO - 네이버 계정 삭제
 
             # 프로필 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
@@ -190,12 +191,12 @@ class Test(unittest.TestCase):
             # 계정 삭제하기 엘리먼트 위치로 스크롤
             self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-            time.sleep(1)
+            sleep(1)
 
             # 계정 삭제하기 버튼 클릭
             target.click()
 
-            time.sleep(1)
+            sleep(1)
 
             # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
             self.driver.find_element_by_id('reason_0').click()
@@ -204,7 +205,7 @@ class Test(unittest.TestCase):
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
 
         except:
-            # TODO - 계정 삭제
+            # TODO - 네이버 계정 삭제
 
             # 동의하기 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn_unit_on'))).click()
@@ -221,12 +222,12 @@ class Test(unittest.TestCase):
             # 계정 삭제하기 엘리먼트 위치로 스크롤
             self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-            time.sleep(1)
+            sleep(1)
 
             # 계정 삭제하기 버튼 클릭
             target.click()
 
-            time.sleep(1)
+            sleep(1)
 
             # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
             self.driver.find_element_by_id('reason_0').click()

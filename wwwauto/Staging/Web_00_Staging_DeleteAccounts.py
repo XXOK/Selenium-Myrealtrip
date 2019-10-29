@@ -14,10 +14,7 @@ PATH = lambda p: os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CONFIG_SECRET_DIR = os.path.join(BASE_DIR, '.config')
-CONFIG_SETTINGS_COMMON_FILE = os.path.join(CONFIG_SECRET_DIR, 'staging_account.json')
-
+CONFIG_SETTINGS_COMMON_FILE = PATH('/Users/yeonshin/Selenium-Myrealtrip/.config/staging_account.json')
 
 class Test(unittest.TestCase):
 
@@ -35,7 +32,7 @@ class Test(unittest.TestCase):
         options.add_argument('headless')
         options.add_argument('window-size=1600x1080')
         options.add_argument("disable-gpu")
-        self.chromeDriver = PATH('../drivers/chromedriver')
+        self.chromeDriver = PATH('/Users/yeonshin/Selenium-Myrealtrip/drivers/chromedriver')
         self.driver = webdriver.Chrome(executable_path=self.chromeDriver)
         # self.driver = webdriver.Chrome(executable_path=self.chromeDriver, chrome_options=options)
         self.wait = WebDriverWait(self.driver, 5)

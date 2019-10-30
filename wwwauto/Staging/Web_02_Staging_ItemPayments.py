@@ -95,8 +95,7 @@ class ItemPayments(unittest.TestCase):
         sleep(2)
 
         # 한달 뒤 날짜 클릭
-        # self.driver.find_elements_by_class_name('CalendarDay__default_2')[27].click()
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'CalendarDay__default_2')))[27].click()
+        self.driver.find_elements_by_class_name('CalendarDay__default_2')[27].click()
 
         sleep(2)
 
@@ -177,37 +176,6 @@ class ItemPayments(unittest.TestCase):
 
         # 예약 취소 문구 확인
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'status-cancel')))
-
-        # # TODO - 무통장 결제 (현재 falsh 실행 불가능으로 주석 처리)
-        #
-        # # 결제정보 무통장 입금 버튼 선택
-        # self.driver.find_element_by_id("type-vbank").click()
-        #
-        # sleep(1)
-        #
-        # # 전체동의 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'all_p'))).click()
-        #
-        # # 입금은행 option 값 Select 인자로 할당 후 변수 할당
-        # select = Select(wait.until(EC.visibility_of_element_located((By.NAME, 'vactBankCode'))))
-        #
-        # # 입금은행 우리은행 선택
-        # select.select_by_value('20')
-        #
-        # # 다음 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn_right'))).click()
-        #
-        # # 예약 완료 시 상품 추천 팝업 닫기 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'Dialog-module__close--3QJG1'))).click()
-        #
-        # # '이 상품을 본 여행자가 함께 본 상품' 영역 변수 할당
-        # target = wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'other-title')))
-        #
-        # # '이 상품을 본 여행자가 함께 본 상품' 영역 엘리먼트 위치로 스크롤
-        # self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
-        #
-        # # 예약내역 버튼 클릭
-        # wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-blue'))).click()
 
     def tearDown(self):
         self.driver.quit()

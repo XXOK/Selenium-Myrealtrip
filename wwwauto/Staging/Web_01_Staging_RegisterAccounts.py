@@ -83,7 +83,7 @@ class RegisterAccounts(unittest.TestCase):
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[password_confirmation]'))).send_keys(normal_password)
 
         # 비밀번호 확인 변수 할당
-        target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'sub-title')))[3]
+        target = wait.until(EC.visibility_of_element_located((By.ID, 'userPasswordConfirm')))
 
         # 비밀번호 확인 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
@@ -91,10 +91,10 @@ class RegisterAccounts(unittest.TestCase):
         sleep(1)
 
         # 약관 전체 동의 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'checkbox-signup-all'))).click()
+        wait.until(EC.visibility_of_element_located((By.ID, 'agreeAll'))).click()
 
         # 회원가입 버튼 클릭
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'btn-wrap')))[2].click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Button-module__button--227wS')))[2].click()
 
         # 휴대폰 번호 입력
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[phone_number]'))).send_keys(phone)
@@ -121,7 +121,9 @@ class RegisterAccounts(unittest.TestCase):
 
         self.driver.find_elements_by_class_name('btn-wrap')[1].click()
 
-        sleep(10)
+        sleep(2)
+
+        self.driver.refresh()
 
         # TODO - 이메일 계정 로그아웃
 

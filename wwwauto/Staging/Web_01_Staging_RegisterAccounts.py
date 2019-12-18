@@ -88,7 +88,7 @@ class RegisterAccounts(unittest.TestCase):
         # 비밀번호 확인 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        sleep(1)
+        sleep(2)
 
         # 약관 전체 동의 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.ID, 'agreeAll'))).click()
@@ -99,12 +99,8 @@ class RegisterAccounts(unittest.TestCase):
         # 휴대폰 번호 입력
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[phone_number]'))).send_keys(phone)
 
-        sleep(1)
-
         # 문자로 인증번호 보내기 버튼 클릭
-        self.driver.find_elements_by_class_name('btn-wrap')[0].click()
-
-        sleep(1)
+        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn--width-100'))).click()
 
         # 인증코드 변수 할당
         target= wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'sub-title')))[2]
@@ -112,18 +108,22 @@ class RegisterAccounts(unittest.TestCase):
         # 인증코드 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        sleep(1)
+        sleep(2)
 
         # 인증코드 입력
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[verify_code]'))).send_keys(code)
 
         sleep(2)
 
-        self.driver.find_elements_by_class_name('btn-wrap')[1].click()
+        # 인증하기 버튼 클릭
+        wait.until(EC.visibility_of_element_located((By.ID, 'verify-btn'))).click()
 
-        sleep(2)
-
-        self.driver.refresh()
+        try:
+            wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'alert-success')))
+            sleep(2)
+            self.driver.refresh()
+        except:
+            pass
 
         # TODO - 이메일 계정 로그아웃
 
@@ -161,12 +161,12 @@ class RegisterAccounts(unittest.TestCase):
         # 계정 삭제하기 엘리먼트 위치로 스크롤
         self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
-        sleep(1)
+        sleep(2)
 
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        sleep(1)
+        sleep(2)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -180,7 +180,7 @@ class RegisterAccounts(unittest.TestCase):
         wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'GlobalNavItems__item')))[2].click()
 
         # 페이스북으로 회원가입 버튼 클릭
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'btn-wrap')))[0].click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Button-module__button--227wS')))[0].click()
 
         # 이메일 입력
         wait.until(EC.visibility_of_element_located((By.ID, 'email'))).send_keys(facebook_email)
@@ -191,17 +191,17 @@ class RegisterAccounts(unittest.TestCase):
         # 로그인 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.ID, 'loginbutton'))).click()
 
-        # 약관동의 변수 할당
-        target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'content-title-box')))[2]
-
-        # 약관동의 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+        # # 약관동의 변수 할당
+        # target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'content-title-box')))[2]
+        #
+        # # 약관동의 엘리먼트 위치로 스크롤
+        # self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
         # 약관 전체 동의 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'checkbox-signup-all'))).click()
+        wait.until(EC.visibility_of_element_located((By.ID, 'agreeAll'))).click()
 
         # 회원가입 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-wrap'))).click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Button-module__button--227wS')))[0].click()
 
         # TODO - 페이스북 계정 로그아웃
 
@@ -224,7 +224,7 @@ class RegisterAccounts(unittest.TestCase):
         # 프로필 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
 
-        # 프로필 관리 버튼 클
+        # 프로필 관리 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
 
         # 계정 삭제하기 변수 할당
@@ -238,7 +238,7 @@ class RegisterAccounts(unittest.TestCase):
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        sleep(1)
+        sleep(2)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -251,8 +251,8 @@ class RegisterAccounts(unittest.TestCase):
         # 회원가입 버튼 클릭
         wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'GlobalNavItems__item')))[2].click()
 
-        # 페이스북으로 회원가입 버튼 클릭
-        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'btn-wrap')))[1].click()
+        # 네이버로 회원가입 버튼 클릭
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Button-module__button--227wS')))[1].click()
 
         sleep(2)
 
@@ -272,17 +272,17 @@ class RegisterAccounts(unittest.TestCase):
         # 이름 입력
         wait.until(EC.visibility_of_element_located((By.NAME, 'user[username]'))).send_keys(name)
 
-        # 약관동의 변수 할당
-        target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'content-title-box')))[2]
-
-        # 약관동의 엘리먼트 위치로 스크롤
-        self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
+        # # 약관동의 변수 할당
+        # target = wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'content-title-box')))[2]
+        #
+        # # 약관동의 엘리먼트 위치로 스크롤
+        # self.driver.execute_script('arguments[0].scrollIntoView(true);', target)
 
         # 약관 전체 동의 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'checkbox-signup-all'))).click()
+        wait.until(EC.visibility_of_element_located((By.ID, 'agreeAll'))).click()
 
         # 회원가입 버튼 클릭
-        wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-wrap'))).click()
+        wait.until(EC.visibility_of_all_elements_located((By.CLASS_NAME, 'Button-module__button--227wS')))[0].click()
 
         # TODO - 네이버 계정 로그아웃
 
@@ -319,13 +319,15 @@ class RegisterAccounts(unittest.TestCase):
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        sleep(1)
+        sleep(2)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
 
         # 팝업의 계정 삭제하기 버튼 클릭
         wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
+
+        sleep(1)
 
     def tearDown(self):
         self.driver.quit()

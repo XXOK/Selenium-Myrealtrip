@@ -98,7 +98,7 @@ class DeleteAccounts(unittest.TestCase):
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        sleep(1)
+        sleep(2)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -142,7 +142,7 @@ class DeleteAccounts(unittest.TestCase):
         # 계정 삭제하기 버튼 클릭
         target.click()
 
-        sleep(1)
+        sleep(2)
 
         # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
         self.driver.find_element_by_id('reason_0').click()
@@ -179,7 +179,7 @@ class DeleteAccounts(unittest.TestCase):
             # 프로필 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'ProfileNavItems'))).click()
 
-            # 프로필 관리 버튼 클
+            # 프로필 관리 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'gtm-gnb-account'))).click()
 
             # 계정 삭제하기 변수 생성
@@ -193,13 +193,15 @@ class DeleteAccounts(unittest.TestCase):
             # 계정 삭제하기 버튼 클릭
             target.click()
 
-            sleep(1)
+            sleep(2)
 
             # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
             self.driver.find_element_by_id('reason_0').click()
 
             # 팝업의 계정 삭제하기 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
+
+            sleep(1)
 
         except:
             # TODO - 네이버 계정 삭제
@@ -224,13 +226,15 @@ class DeleteAccounts(unittest.TestCase):
             # 계정 삭제하기 버튼 클릭
             target.click()
 
-            sleep(1)
+            sleep(2)
 
             # 여행을 자주 떠나지 않아서요. 라디오 버튼 클릭
             self.driver.find_element_by_id('reason_0').click()
 
             # 팝업의 계정 삭제하기 버튼 클릭
             wait.until(EC.visibility_of_element_located((By.CLASS_NAME, 'btn-submit'))).click()
+
+            sleep(1)
 
     def tearDown(self):
         self.driver.quit()
